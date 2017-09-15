@@ -1,0 +1,14 @@
+<h1> Hey! User </p>
+<h1> YOUR ID: <%= @user.id %>
+<br/>
+<% if session[:role] == 'user_admin' and session[:user_id] == @user.id%>
+<p><%= link_to('Users', users_path) %></p>
+<% end %>
+<% if session[:user_id] == @user.id %>
+  <p><%= link_to('Genres', genres_path) %></p>
+<% end %>
+<br/>
+<% if session[:user_id] == @user.id %>
+<%= link_to 'Settings', update_credentials_path(@user.id) %>
+<% end %>
+<br/>

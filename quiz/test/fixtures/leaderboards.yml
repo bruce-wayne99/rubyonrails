@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  score: 1
+  user: one
+  genre: one
+  subgenre: one
+
+two:
+  score: 1
+  user: two
+  genre: two
+  subgenre: two

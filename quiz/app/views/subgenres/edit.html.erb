@@ -1,0 +1,8 @@
+<h1>Editing Subgenre</h1>
+
+<%= render 'form', subgenre: @subgenre ,path: subgenre_path %>
+
+<% if session[:role] == 'user_admin' %>
+<%= link_to 'Show', @subgenre %> |
+<% end %>
+<%= link_to 'Back', subgenres_link_path(@subgenre.genre_id) %>

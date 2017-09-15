@@ -1,0 +1,22 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @subgenre.name %>
+</p>
+
+<p>
+  <strong>No of questions:</strong>
+  <%= @subgenre.no_of_questions %>
+</p>
+
+<p>
+  <% if session[:role] == 'user_admin' %>
+    <%= link_to('Questions', questions_link_path(@subgenre.id)) %>
+  <% end %>
+</p>
+
+<% if session[:role] == 'user_admin' %>
+  <%= link_to 'Edit', edit_subgenre_path(@subgenre) %> |
+<% end %>
+<%= link_to 'Back', subgenres_link_path(@subgenre.genre_id) %>
