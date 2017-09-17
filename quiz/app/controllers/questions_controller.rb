@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :edit, :update, :destroy]
-  before_action :authorize_admin
+  skip_before_action :authorize_admin, only: [:quizindex]
   # GET /questions
   # GET /questions.json
   def index
@@ -13,6 +13,14 @@ class QuestionsController < ApplicationController
   def show
   end
 
+  def quizindex
+    set_subgenre
+    set_length
+    set_stat
+    increment
+    @questions = @subgenre.questions.all
+    @question = @questions[$Iterator]
+  end
   # GET /questions/new
   def new
     set_subgenre
@@ -66,6 +74,10 @@ class QuestionsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def set_length
+      $Length = @subgenre.questions.all.length
+    end
+
     def set_question
       @question = Question.find(params[:id])
     end
@@ -73,6 +85,16 @@ class QuestionsController < ApplicationController
     def set_subgenre
       @subgenre = Subgenre.find(params[:subgenre_id])
     end
+
+    def set_stat
+      @stat = Stat.find_by(subgenre_id: @subgenre.id, user_id: session['user_id'])
+      if $Iterator + 1 == $Length
+        @stat.destroy
+      else
+        @stat.update_attributes(qnumber: $Iterator)
+      end
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def question_params
       params.require(:question).permit(:qtype, :qstring, :optionA, :optionB, :optionC, :optionD, :answer, :subgenre_id, :score)

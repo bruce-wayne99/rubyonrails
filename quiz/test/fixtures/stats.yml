@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  qnumber: 1
   user: one
-  genre: one
-  question: one
+  subgenre: one
 
 two:
+  qnumber: 1
   user: two
-  genre: two
-  question: two
+  subgenre: two

@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<% if $Iterator == $Length %>
+  <p> Quiz is done </p>
+  <%= link_to 'Quiz Page', subgenre_path(@subgenre.id) %>
+<% else %>
+<p>
+  <strong>Question Type:</strong>
+  <% if @question.qtype == 1 %>
+    <strong> Single Correct Answer Type </strong>
+  <% else %>
+    <strong> Multi Correct Answer Type </strong>
+  <% end %>
+</p>
+
+<p>
+  <strong>Question : </strong><br/>
+  <%= @question.qstring %><br/>
+</p>
+
+<p>
+  <strong>A: </strong>
+  <%= @question.optionA %><br/>
+</p>
+
+<p>
+  <strong>B: </strong>
+  <%= @question.optionB %><br/>
+</p>
+
+<p>
+  <strong>C: </strong>
+  <%= @question.optionC %><br/>
+</p>
+
+<p>
+  <strong>D: </strong>
+  <%= @question.optionD %><br/>
+</p>
+
+<p>
+  <strong>Answer:</strong>
+  <%= @question.answer %>
+</p>
+
+<p>
+  <strong>Points For the Question: </strong>
+  <%= @question.score %><br/>
+</p>
+
+<%= link_to 'Next', quiz_link_path %>
+<br/>
+<%= link_to 'Pause', subgenre_path(@subgenre.id) %>
+<% end %>

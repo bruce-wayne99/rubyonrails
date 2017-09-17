@@ -1,9 +1,9 @@
 class CreateStats < ActiveRecord::Migration[5.1]
   def change
     create_table :stats do |t|
+      t.integer :qnumber
       t.references :user, foreign_key: true
-      t.references :genre, foreign_key: true
-      t.references :question, foreign_key: true
+      t.references :subgenre, foreign_key: true
 
       t.timestamps
     end

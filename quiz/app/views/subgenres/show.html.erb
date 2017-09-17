@@ -15,6 +15,13 @@
     <%= link_to('Questions', questions_link_path(@subgenre.id)) %>
   <% end %>
 </p>
+<p>
+  <%= link_to 'New Quiz!',start_newquiz_link_path(@subgenre.id), method: :post %>
+  <% @stat = Stat.find_by(subgenre_id: @subgenre.id, user_id: session['user_id']) %>
+  <% if @stat %>
+    <%= link_to 'Resume Quiz!',start_resumequiz_link_path(@subgenre.id), method: :post %>
+  <% end %>
+</p>
 
 <% if session[:role] == 'user_admin' %>
   <%= link_to 'Edit', edit_subgenre_path(@subgenre) %> |

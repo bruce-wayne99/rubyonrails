@@ -14,5 +14,10 @@ class ApplicationController < ActionController::Base
       redirect_to login_url, alert:"You are trying to access without permission?"
     end
   end
-
+  $Iterator = 0
+  $Length
+  def increment
+    $Iterator ||=0
+    $Iterator += 1
+  end
 end

@@ -26,7 +26,12 @@
   </tbody>
 </table>
 
-<br>
+<br/>
+<% if session[:role] == 'user_admin' %>
+  <p><%= link_to('Leaderboard', leaderboards_subgenre_link_path(@genre.id)) %></p>
+<% end %>
 <% if session[:role] == 'user_admin' %>
   <%= link_to 'New Subgenre', new_subgenre_link_path %>
 <% end %>
+<br/>
+<%= link_to 'back', genre_path(params[:genre_id]) %>

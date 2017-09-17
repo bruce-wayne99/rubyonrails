@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170915134542) do
+ActiveRecord::Schema.define(version: 20170916183646) do
 
   create_table "genres", force: :cascade do |t|
     t.string "name"
@@ -47,13 +47,12 @@ ActiveRecord::Schema.define(version: 20170915134542) do
   end
 
   create_table "stats", force: :cascade do |t|
+    t.integer "qnumber"
     t.integer "user_id"
-    t.integer "genre_id"
-    t.integer "question_id"
+    t.integer "subgenre_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["genre_id"], name: "index_stats_on_genre_id"
-    t.index ["question_id"], name: "index_stats_on_question_id"
+    t.index ["subgenre_id"], name: "index_stats_on_subgenre_id"
     t.index ["user_id"], name: "index_stats_on_user_id"
   end
 
@@ -68,6 +67,7 @@ ActiveRecord::Schema.define(version: 20170915134542) do
 
   create_table "users", force: :cascade do |t|
     t.string "username"
+    t.string "email"
     t.string "password_digest"
     t.string "role"
     t.datetime "created_at", null: false

@@ -1,7 +1,14 @@
 Rails.application.routes.draw do
 
-  resources :questions
-  resources :subgenres
+
+  post 'subgenres/:subgenre_id/questions/:id/start_newquiz', to: 'subgenres#start_newquiz', as: 'start_newquiz_link'
+  post 'subgenres/:subgenre_id/questions/:id/start_resumequiz', to: 'subgenres#start_resumequiz', as: 'start_resumequiz_link'
+  get 'subgenres/:subgenre_id/questions/quizindex', to: 'questions#quizindex', as: 'quiz_link'
+
+  get 'subgenres/:subgenre_id/leaderboards', to: 'leaderboards#subindex', as: 'leaderboards_subgenre_link'
+  get 'genres/:genre_id/leaderboards', to: 'leaderboards#genindex', as: 'leaderboards_genre_link'
+  post 'subgenres/:subgenre_id/leaderboards', to: 'leaderboards#create', as: 'leaderboards_link_create'
+  get 'subgenres/:subgenre_id/leaderboards/new', to: 'leaderboards#new', as: 'new_leaderboards_link'
 
   get 'genres/:genre_id/subgenres/new', to: 'subgenres#new', as: 'new_subgenre_link'
   get 'genres/:genre_id/subgenres', to: 'subgenres#index', as: 'subgenres_link'
@@ -22,6 +29,9 @@ Rails.application.routes.draw do
   get 'sessions/create'
   get 'sessions/destroy'
 
+  resources :leaderboards
+  resources :questions
+  resources :subgenres
   resources :genres
   resources :users
 

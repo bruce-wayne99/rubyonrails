@@ -1,6 +1,6 @@
 class SubgenresController < ApplicationController
   before_action :set_subgenre, only: [:show, :edit, :update, :destroy]
-  skip_before_action :authorize_admin, only: [:index, :show]
+  skip_before_action :authorize_admin, only: [:index, :show, :start_newquiz, :start_resumequiz]
   # GET /subgenres
   # GET /subgenres.json
   def index
@@ -11,6 +11,26 @@ class SubgenresController < ApplicationController
   # GET /subgenres/1
   # GET /subgenres/1.json
   def show
+  end
+
+  def start_newquiz
+    $Iterator = -1
+    set_subgenre
+    set_newstat
+    respond_to do |format|
+      format.html{ redirect_to quiz_link_url }
+      format.json{ render json: "New quiz started", status: :success}
+    end
+  end
+
+  def start_resumequiz
+    set_subgenre
+    set_oldstat
+    set_resumequiz
+    respond_to do |format|
+      format.html{ redirect_to quiz_link_url }
+      format.json{ render json: "Old quiz resumed", status: :success}
+    end
   end
 
   # GET /subgenres/new
@@ -28,7 +48,6 @@ class SubgenresController < ApplicationController
   def create
     set_genre
     @subgenre = @genre.subgenres.new(subgenre_params)
-
     respond_to do |format|
       if @subgenre.save
         format.html { redirect_to subgenres_link_url, notice: 'Subgenre was successfully created.' }
@@ -69,8 +88,25 @@ class SubgenresController < ApplicationController
     def set_subgenre
       @subgenre = Subgenre.find(params[:id])
     end
+
     def set_genre
       @genre = Genre.find(params[:genre_id])
+    end
+
+    def set_newstat
+      @stat = Stat.find_by(user_id: session['user_id'], subgenre_id: @subgenre.id)
+      if @stat
+        @stat.destroy
+      end
+      @stat = Stat.create(user_id: session['user_id'], subgenre_id: @subgenre.id, qnumber: $Iterator)
+    end
+
+    def set_oldstat
+      @stat = Stat.find_by(user_id: session['user_id'], subgenre_id: @subgenre.id)
+    end
+
+    def set_resumequiz
+      $Iterator = @stat.qnumber
     end
     # Never trust parameters from the scary internet, only allow the white list through.
     def subgenre_params
