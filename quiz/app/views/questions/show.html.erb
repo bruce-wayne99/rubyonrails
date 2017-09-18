@@ -12,37 +12,12 @@
 <p>
   <strong>Question : </strong><br/>
   <%= @question.qstring %><br/>
-</p>
 
-<p>
-  <strong>A: </strong>
-  <%= @question.optionA %><br/>
-</p>
-
-<p>
-  <strong>B: </strong>
-  <%= @question.optionB %><br/>
-</p>
-
-<p>
-  <strong>C: </strong>
-  <%= @question.optionC %><br/>
-</p>
-
-<p>
-  <strong>D: </strong>
-  <%= @question.optionD %><br/>
-</p>
-
-<p>
-  <strong>Answer:</strong>
-  <%= @question.answer %>
-</p>
-
-<p>
   <strong>Points For the Question: </strong>
   <%= @question.score %><br/>
 </p>
+
+<p><%= link_to('Options', options_link_path(@question.id)) %></p>
 
 <%= link_to 'Edit', edit_question_path(@question) %> |
 <%= link_to 'Back', questions_link_path(@question.subgenre_id) %>

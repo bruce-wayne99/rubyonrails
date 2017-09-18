@@ -6,19 +6,30 @@
   <thead>
     <tr>
       <th>Score</th>
-      <th>User</th>
+      <th>Name</th>
       <th>Genre</th>
-      <th>Subgenre</th>
       <th colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
-    <% @leaderboards.each do |leaderboard| %>
+    <% genreboard = Array.new %>
+    <% for id in @userids %>
+      <% score = 0 %>
+      <% @userdata = @genre.leaderboards.where(user_id: id) %>
+      <% for data in @userdata %>
+          <% score += data.score %>
+      <% end %>
+      <% genreboard.push([id, score]) %>
+    <% end %>
+    <% genreboard = genreboard.sort_by(&:last) %>
+    <% genreboard = genreboard.reverse %>
+    <% for ele in genreboard %>
       <tr>
-        <td><%= leaderboard.score %></td>
-        <td><%= leaderboard.user %></td>
-        <td><%= leaderboard.genre %></td>
+        <% @user = User.find(ele[0]) %>
+        <td><%= ele[1] %></td>
+        <td><%= @user.username %></td>
+        <td><%= @genre.name %></td>
       </tr>
     <% end %>
   </tbody>

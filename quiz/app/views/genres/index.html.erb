@@ -30,3 +30,5 @@
 <% if session[:role] == 'user_admin' %>
   <%= link_to 'New Genre', new_genre_path %>
 <% end %>
+<br/>
+<%= link_to 'Back', user_path(session['user_id']) %>

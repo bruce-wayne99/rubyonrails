@@ -18,37 +18,12 @@
   <%= @question.qstring %><br/>
 </p>
 
-<p>
-  <strong>A: </strong>
-  <%= @question.optionA %><br/>
-</p>
-
-<p>
-  <strong>B: </strong>
-  <%= @question.optionB %><br/>
-</p>
-
-<p>
-  <strong>C: </strong>
-  <%= @question.optionC %><br/>
-</p>
-
-<p>
-  <strong>D: </strong>
-  <%= @question.optionD %><br/>
-</p>
-
-<p>
-  <strong>Answer:</strong>
-  <%= @question.answer %>
-</p>
+<%= render 'quizform', question: @question, options: @options, path: quiz_link_path %>
 
 <p>
   <strong>Points For the Question: </strong>
   <%= @question.score %><br/>
 </p>
 
-<%= link_to 'Next', quiz_link_path %>
-<br/>
 <%= link_to 'Pause', subgenre_path(@subgenre.id) %>
 <% end %>

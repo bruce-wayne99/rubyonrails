@@ -15,11 +15,18 @@ class QuestionsController < ApplicationController
 
   def quizindex
     set_subgenre
+    set_leaderboard
     set_length
+    set_score
     set_stat
     increment
     @questions = @subgenre.questions.all
     @question = @questions[$Iterator]
+    if @question
+      @options = @question.options.all
+    else
+      @options = nil
+    end
   end
   # GET /questions/new
   def new
@@ -74,6 +81,38 @@ class QuestionsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+
+    def set_score
+      if $Iterator >= 0 && $Iterator < $Length
+        @questions = @subgenre.questions.all
+        @question = @questions[$Iterator]
+        @options = @question.options.all
+        @useranswers = params[:answer_ids]
+        flag = 0
+        if !@useranswers
+          flag = 1
+        else
+          for option in @options
+            if @useranswers.include? (option.id).to_s && option.isanswer == 0
+              flag = 1
+              break
+            elsif option.isanswer == 1 &&  !(@useranswers.include? (option.id).to_s)
+              flag = 1
+              break
+            end
+          end
+        end
+        if flag == 0
+          @stat = Stat.find_by(subgenre_id: @subgenre.id, user_id: session['user_id'])
+          x = @stat.score
+          y = @question.score
+          @stat.update_attributes(score: x+y)
+        end
+     end
+    end
+    def set_leaderboard
+      @leaderboard = Leaderboard.find_by(user_id: session['user_id'], subgenre_id: params[:subgenre_id], genre_id: @subgenre.genre_id)
+    end
     def set_length
       $Length = @subgenre.questions.all.length
     end
@@ -89,6 +128,7 @@ class QuestionsController < ApplicationController
     def set_stat
       @stat = Stat.find_by(subgenre_id: @subgenre.id, user_id: session['user_id'])
       if $Iterator + 1 == $Length
+        @leaderboard.update_attributes(score: @stat.score)
         @stat.destroy
       else
         @stat.update_attributes(qnumber: $Iterator)
@@ -97,6 +137,6 @@ class QuestionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def question_params
-      params.require(:question).permit(:qtype, :qstring, :optionA, :optionB, :optionC, :optionD, :answer, :subgenre_id, :score)
+      params.require(:question).permit(:qtype, :qstring, :subgenre_id, :score, :answer_ids)
     end
 end

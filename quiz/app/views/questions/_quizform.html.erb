@@ -1,0 +1,31 @@
+<%= form_tag(path, method: "get") do |form| %>
+  <% if question.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(question.errors.count, "error") %> prohibited this question from being saved:</h2>
+
+      <ul>
+      <% options.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+<% if question.qtype == 1 %>
+  <% options.each do |option| %>
+    <div class="field">
+      <%= radio_button_tag 'answer_ids[]', option.id ,false %>
+      <%= option.answer %>
+    </div>
+  <% end %>
+<% else %>
+  <% options.each do |option| %>
+    <div class="field">
+      <%= check_box_tag 'answer_ids[]', option.id ,false %>
+      <%= option.answer %>
+    </div>
+  <% end %>
+<% end %>
+  <div class="actions">
+    <%= submit_tag("Next Question") %>
+  </div>
+<% end %>

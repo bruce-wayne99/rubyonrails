@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Answer:</strong>
+  <%= @option.answer %>
+</p>
+
+<p>
+  <strong>Isanswer:</strong>
+  <%= @option.isanswer %>
+</p>
+
+
+<%= link_to 'Edit', edit_option_path(@option) %> |
+<%= link_to 'Back', options_link_path(@option.question_id) %>

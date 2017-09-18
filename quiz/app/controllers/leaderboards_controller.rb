@@ -5,12 +5,14 @@ class LeaderboardsController < ApplicationController
   # GET /leaderboards.json
   def genindex
     set_genre
-    @leaderboards = @genre.leaderboards.all
+    @userids = @genre.leaderboards.select(:user_id).map(&:user_id).uniq
   end
 
   def subindex
     set_subgenre
     @leaderboards = @subgenre.leaderboards.all
+    @leaderboards = @leaderboards.sort_by &:score
+    @leaderboards = @leaderboards.reverse
   end
 
   # GET /leaderboards/1
@@ -78,7 +80,7 @@ class LeaderboardsController < ApplicationController
     end
 
     def set_subgenre
-      @subgenre = Genre.find(params[:subgenre_id])
+      @subgenre = Subgenre.find(params[:subgenre_id])
     end
     # Never trust parameters from the scary internet, only allow the white list through.
     def leaderboard_params

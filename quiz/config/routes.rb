@@ -10,6 +10,10 @@ Rails.application.routes.draw do
   post 'subgenres/:subgenre_id/leaderboards', to: 'leaderboards#create', as: 'leaderboards_link_create'
   get 'subgenres/:subgenre_id/leaderboards/new', to: 'leaderboards#new', as: 'new_leaderboards_link'
 
+  get 'questions/:question_id/options/new', to: 'options#new', as: 'new_option_link'
+  get 'questions/:question_id/questions', to: 'options#index', as: 'options_link'
+  post 'questions/:question_id/questions', to: 'options#create', as: 'options_link_create'
+
   get 'genres/:genre_id/subgenres/new', to: 'subgenres#new', as: 'new_subgenre_link'
   get 'genres/:genre_id/subgenres', to: 'subgenres#index', as: 'subgenres_link'
   post 'genres/:genre_id/subgenres', to: 'subgenres#create', as: 'subgenres_link_create'
@@ -29,6 +33,7 @@ Rails.application.routes.draw do
   get 'sessions/create'
   get 'sessions/destroy'
 
+  resources :options
   resources :leaderboards
   resources :questions
   resources :subgenres

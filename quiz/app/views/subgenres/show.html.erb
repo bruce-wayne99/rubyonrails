@@ -18,12 +18,25 @@
 <p>
   <%= link_to 'New Quiz!',start_newquiz_link_path(@subgenre.id), method: :post %>
   <% @stat = Stat.find_by(subgenre_id: @subgenre.id, user_id: session['user_id']) %>
+  <% @attempt = Leaderboard.find_by(subgenre_id: @subgenre.id, user_id: session['user_id']) %>
+  <% if @attempt %>
+    <div> Already Attempted! </div>
+    <div> Your Score: <%= @attempt.score %> </div>
+  <% else %>
+    <div> Not Attempted! </div>
+  <% end %>
   <% if @stat %>
+    <br/>
     <%= link_to 'Resume Quiz!',start_resumequiz_link_path(@subgenre.id), method: :post %>
   <% end %>
 </p>
 
 <% if session[:role] == 'user_admin' %>
+  <p><%= link_to('Leaderboard', leaderboards_subgenre_link_path(@subgenre.id)) %></p>
+<% end %>
+
+<% if session[:role] == 'user_admin' %>
   <%= link_to 'Edit', edit_subgenre_path(@subgenre) %> |
 <% end %>
+
 <%= link_to 'Back', subgenres_link_path(@subgenre.genre_id) %>

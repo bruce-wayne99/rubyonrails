@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170916183646) do
+ActiveRecord::Schema.define(version: 20170917045113) do
 
   create_table "genres", force: :cascade do |t|
     t.string "name"
@@ -31,16 +31,21 @@ ActiveRecord::Schema.define(version: 20170916183646) do
     t.index ["user_id"], name: "index_leaderboards_on_user_id"
   end
 
+  create_table "options", force: :cascade do |t|
+    t.text "answer"
+    t.integer "isanswer"
+    t.integer "question_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_options_on_question_id"
+  end
+
   create_table "questions", force: :cascade do |t|
     t.integer "qtype"
     t.text "qstring"
-    t.string "optionA"
-    t.string "optionB"
-    t.string "optionC"
-    t.string "optionD"
-    t.string "answer"
     t.integer "subgenre_id"
     t.integer "score"
+    t.binary "picture"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["subgenre_id"], name: "index_questions_on_subgenre_id"
@@ -48,6 +53,7 @@ ActiveRecord::Schema.define(version: 20170916183646) do
 
   create_table "stats", force: :cascade do |t|
     t.integer "qnumber"
+    t.integer "score"
     t.integer "user_id"
     t.integer "subgenre_id"
     t.datetime "created_at", null: false

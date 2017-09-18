@@ -17,6 +17,7 @@ class SubgenresController < ApplicationController
     $Iterator = -1
     set_subgenre
     set_newstat
+    set_leaderboard
     respond_to do |format|
       format.html{ redirect_to quiz_link_url }
       format.json{ render json: "New quiz started", status: :success}
@@ -27,6 +28,7 @@ class SubgenresController < ApplicationController
     set_subgenre
     set_oldstat
     set_resumequiz
+    set_leaderboard
     respond_to do |format|
       format.html{ redirect_to quiz_link_url }
       format.json{ render json: "Old quiz resumed", status: :success}
@@ -85,6 +87,14 @@ class SubgenresController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def set_leaderboard
+      @leaderboard = Leaderboard.find_by(subgenre_id: params[:id], user_id: session['user_id'])
+      if !@leaderboard
+        @leaderboard = Leaderboard.new(subgenre_id: params[:id], user_id: session['user_id'], score: 0, genre_id: @subgenre.genre_id)
+        @leaderboard.save
+      end
+    end
+
     def set_subgenre
       @subgenre = Subgenre.find(params[:id])
     end
@@ -98,7 +108,7 @@ class SubgenresController < ApplicationController
       if @stat
         @stat.destroy
       end
-      @stat = Stat.create(user_id: session['user_id'], subgenre_id: @subgenre.id, qnumber: $Iterator)
+      @stat = Stat.create(user_id: session['user_id'], subgenre_id: @subgenre.id, qnumber: $Iterator, score: 0)
     end
 
     def set_oldstat
