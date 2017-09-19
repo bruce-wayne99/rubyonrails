@@ -10,22 +10,61 @@ class QuestionsController < ApplicationController
 
   # GET /questions/1
   # GET /questions/1.json
+  def fifty_fifty
+    set_subgenre
+    @stat = Stat.find_by(subgenre_id: @subgenre.id, user_id: session['user_id'])
+    @questions = @subgenre.questions.all
+    @question = @questions[$Iterator]
+    @stat.update_attributes(fifty_fifty: 0)
+    @options = @question.options.all
+    @notAnswer = Array.new
+    for option in @options
+      if @notAnswer.length == 2
+        break
+      end
+      if option.isanswer == 0
+        @notAnswer.push(option.id)
+      end
+    end
+    respond_to do |format|
+      format.html{ render :lifelines, notice: 'Audience Poll lifeline.' }
+      format.json{ render json: "lifeline has been used", status: :success}
+    end
+  end
+
+  def audience_poll
+    set_subgenre
+    @stat = Stat.find_by(subgenre_id: @subgenre.id, user_id: session['user_id'])
+    @questions = @subgenre.questions.all
+    @question = @questions[$Iterator]
+    @stat.update_attributes(audience_poll: 0)
+    @options = @question.options.all
+    @audiencePoll = Array.new
+    set_poll
+    respond_to do |format|
+      format.html{ render :lifelines, notice: '50-50 lifeline.' }
+      format.json{ render json: "lifeline has been used", status: :success}
+    end
+  end
+
   def show
   end
 
   def quizindex
-    set_subgenre
-    set_leaderboard
-    set_length
-    set_score
-    set_stat
-    increment
-    @questions = @subgenre.questions.all
-    @question = @questions[$Iterator]
-    if @question
-      @options = @question.options.all
-    else
-      @options = nil
+    if !@notAnswer
+      set_subgenre
+      set_leaderboard
+      set_length
+      set_score
+      set_stat
+      increment
+      @questions = @subgenre.questions.all
+      @question = @questions[$Iterator]
+      if @question
+        @options = @question.options.all
+      else
+        @options = nil
+      end
     end
   end
   # GET /questions/new
@@ -135,8 +174,26 @@ class QuestionsController < ApplicationController
       end
     end
 
+    def set_poll
+      val = 0
+      x = 0
+      for option in @options
+        if option.isanswer == 1
+          val = rand(61..100)
+          @audiencePoll[option.id] = val
+        end
+      end
+      for option in @options
+        if option.isanswer == 0
+          x = rand(100-val)
+          @audiencePoll[option.id] = x
+          val += x
+        end
+      end
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def question_params
-      params.require(:question).permit(:qtype, :qstring, :subgenre_id, :score, :answer_ids)
+      params.require(:question).permit(:qtype, :qstring, :subgenre_id, :score, :answer_ids, :picture, :video)
     end
 end

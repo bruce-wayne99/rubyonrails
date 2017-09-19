@@ -4,7 +4,6 @@ class CreateSubgenres < ActiveRecord::Migration[5.1]
       t.string :name
       t.integer :no_of_questions
       t.references :genre, foreign_key: true
-
       t.timestamps
     end
   end

@@ -1,5 +1,9 @@
 <p id="notice"><%= notice %></p>
 
+<% if $Iterator == $Length %>
+  <p> Quiz is done </p>
+  <%= link_to 'Quiz Page', subgenre_path(@subgenre.id) %>
+<% else %>
 <p>
   <strong>Question Type:</strong>
   <% if @question.qtype == 1 %>
@@ -12,20 +16,24 @@
 <p>
   <strong>Question : </strong><br/>
   <%= @question.qstring %><br/>
-
+</p>
+<p>
   <% if @question.picture && @question.picture != "" %>
     <%= image_tag(@question.picture) %>
   <% end %>
-  <br/>
+</p>
+<p>
   <% if @question.video && @question.video != "" %>
-    <%= video_tag @question.video, :size => "500x500", :controls => true %>
+    <%= video_tag @question.video, :size => "320x240", :controls => true %>
   <% end %>
-  <br/>
+</p>
+
+<%= render 'quizform', question: @question, options: @options, path: quiz_link_path ,notAnswer: @notAnswer, audiencePoll: @audiencePoll %>
+
+<p>
   <strong>Points For the Question: </strong>
   <%= @question.score %><br/>
 </p>
 
-<p><%= link_to('Options', options_link_path(@question.id)) %></p>
-
-<%= link_to 'Edit', edit_question_path(@question) %> |
-<%= link_to 'Back', questions_link_path(@question.subgenre_id) %>
+<%= link_to 'Pause', subgenre_path(@subgenre.id) %>
+<% end %>

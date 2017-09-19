@@ -13,9 +13,34 @@
 <% if question.qtype == 1 %>
   <% options.each do |option| %>
     <div class="field">
-      <%= radio_button_tag 'answer_ids[]', option.id ,false %>
-      <%= option.answer %>
+      <% if notAnswer && (notAnswer.include? option.id) %>
+        <% if audiencePoll %>
+          <%= radio_button_tag 'answer_ids[]', option.id ,false, disabled: true %>
+          <%= option.answer %>
+          -- <%=   audiencePoll[option.id] %>%
+        <% else %>
+          <%= radio_button_tag 'answer_ids[]', option.id ,false, disabled: true %>
+          <%= option.answer %>
+        <% end %>
+      <% else %>
+        <% if audiencePoll %>
+          <%= radio_button_tag 'answer_ids[]', option.id ,false %>
+          <%= option.answer %>
+          -- <%=   audiencePoll[option.id] %>%
+        <% else %>
+          <%= radio_button_tag 'answer_ids[]', option.id ,false %>
+          <%= option.answer %>
+        <% end %>
+      <% end %>
+
     </div>
+  <% end %>
+  <p>Lifelines : </p>
+  <% if @stat.fifty_fifty == 1 %>
+    <%= link_to '50-50  ', fifty_fifty_path, method: :post %>
+  <% end %>
+  <% if @stat.audience_poll == 1 %>
+    <%= link_to 'Audience Poll', audience_poll_path, method: :post %>
   <% end %>
 <% else %>
   <% options.each do |option| %>

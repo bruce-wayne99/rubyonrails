@@ -17,8 +17,17 @@
   <strong>Question : </strong><br/>
   <%= @question.qstring %><br/>
 </p>
-
-<%= render 'quizform', question: @question, options: @options, path: quiz_link_path %>
+<p>
+  <% if @question.picture && @question.picture != "" %>
+    <%= image_tag(@question.picture) %>
+  <% end %>
+</p>
+<p>
+  <% if @question.video && @question.video != "" %>
+    <%= video_tag @question.video, :size => "320x240", :controls => true %>
+  <% end %>
+</p>
+<%= render 'quizform', question: @question, options: @options, path: quiz_link_path ,notAnswer: nil, audiencePoll: nil %>
 
 <p>
   <strong>Points For the Question: </strong>

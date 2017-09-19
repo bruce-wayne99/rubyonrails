@@ -108,7 +108,7 @@ class SubgenresController < ApplicationController
       if @stat
         @stat.destroy
       end
-      @stat = Stat.create(user_id: session['user_id'], subgenre_id: @subgenre.id, qnumber: $Iterator, score: 0)
+      @stat = Stat.create(user_id: session['user_id'], subgenre_id: @subgenre.id, qnumber: $Iterator, score: 0, fifty_fifty: 1, audience_poll: 1)
     end
 
     def set_oldstat

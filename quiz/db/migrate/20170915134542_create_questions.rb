@@ -5,7 +5,8 @@ class CreateQuestions < ActiveRecord::Migration[5.1]
       t.text :qstring
       t.references :subgenre, foreign_key: true
       t.integer :score
-      t.binary :picture
+      t.string :picture
+      t.string :video
       t.timestamps
     end
   end

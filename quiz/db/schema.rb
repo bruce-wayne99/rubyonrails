@@ -45,7 +45,8 @@ ActiveRecord::Schema.define(version: 20170917045113) do
     t.text "qstring"
     t.integer "subgenre_id"
     t.integer "score"
-    t.binary "picture"
+    t.string "picture"
+    t.string "video"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["subgenre_id"], name: "index_questions_on_subgenre_id"
@@ -56,6 +57,8 @@ ActiveRecord::Schema.define(version: 20170917045113) do
     t.integer "score"
     t.integer "user_id"
     t.integer "subgenre_id"
+    t.integer "fifty_fifty"
+    t.integer "audience_poll"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["subgenre_id"], name: "index_stats_on_subgenre_id"
