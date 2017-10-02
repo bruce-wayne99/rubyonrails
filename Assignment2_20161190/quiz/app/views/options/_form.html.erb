@@ -1,0 +1,27 @@
+<%= form_for option, class: "form-group", url: path do |form| %>
+  <% if option.errors.any? %>
+    <div  class="alert alert-danger">
+      <h2><%= pluralize(option.errors.count, "error") %> prohibited this option from being saved:</h2>
+
+      <ul>
+      <% option.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :answer %>
+    <%= form.text_area :answer, id: :option_answer, class: "form-control", placeholder: "Enter the option" %>
+  </div>
+  <br/>
+  <div class="field">
+    <%= form.label :isanswer %>
+    <%= form.number_field :isanswer, id: :option_isanswer, class: "form-control", placeholder: "Is it Answer or not?" %>
+  </div>
+  <br/>
+  <div class="actions">
+    <%= form.submit class: "btn btn-success", role: "button"%>
+  </div>
+<% end %>

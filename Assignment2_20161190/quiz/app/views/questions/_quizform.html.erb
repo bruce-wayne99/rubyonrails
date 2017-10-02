@@ -1,0 +1,74 @@
+<%= form_tag(path, method: "get", class: "form-group") do |form| %>
+  <% if question.errors.any? %>
+    <div  class="alert alert-danger">
+      <h2><%= pluralize(question.errors.count, "error") %> prohibited this question from being saved:</h2>
+
+      <ul>
+      <% options.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+ <div class="panel panel-warning">
+<div class="panel-body">
+<% if question.qtype == 1 %>
+  <% options.each do |option| %>
+  <li class="list-group-item" >
+    <div class="field">
+      <% if notAnswer && (notAnswer.include? option.id) %>
+        <% if audiencePoll %>
+          <label>
+          <%= radio_button_tag 'answer_ids[]', option.id ,false, disabled: true%>
+          <%= option.answer %>
+          </label>
+          -- <%=   audiencePoll[option.id] %>%
+        <% else %>
+          <label>
+            <%= radio_button_tag 'answer_ids[]', option.id ,false, disabled: true %>
+            <%= option.answer %>
+          </label>
+        <% end %>
+      <% else %>
+        <% if audiencePoll %>
+        <label>
+          <%= radio_button_tag 'answer_ids[]', option.id ,false %>
+          <%= option.answer %>
+          -- <%=   audiencePoll[option.id] %>%
+        </label>
+        <% else %>
+        <label>
+          <%= radio_button_tag 'answer_ids[]', option.id ,false %>
+          <%= option.answer %>
+        </label>
+        <% end %>
+      <% end %>
+    </div>
+  </li>
+  <% end %>
+  <h4>Lifelines : </h4>
+  <% if @stat.fifty_fifty == 1 %>
+    <%= link_to '50-50  ', fifty_fifty_path, method: :post, class: "btn btn-info", role: "button" %>
+  <% end %>
+  <% if @stat.audience_poll == 1 %>
+    <%= link_to 'Audience Poll', audience_poll_path, method: :post, class: "btn btn-success", role: "button" %>
+  <% end %>
+  <br/>
+  <br/>
+<% else %>
+  <% options.each do |option| %>
+  <li class="list-group-item" >
+    <div class="field">
+      <%= check_box_tag 'answer_ids[]', option.id ,false %>
+      <%= option.answer %>
+    </div>
+  </li>
+  <% end %>
+<% end %>
+</div>
+  <div class="actions">
+    <%= submit_tag("Next Question", class: "btn btn-danger", role: "button" ) %>
+  </div>
+  <br/>
+</div>
+<% end %>

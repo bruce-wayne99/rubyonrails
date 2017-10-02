@@ -1,0 +1,12 @@
+<h1>Editing User</h1>
+
+<%= render 'form', user: @user %>
+
+<ul class="pager">
+  <li>
+    <%= link_to 'Show User', @user %>
+  </li>
+  <li>
+    <%= link_to 'Back', user_path(@user.id) %>
+  </li>
+</ul>

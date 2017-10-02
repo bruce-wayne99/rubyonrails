@@ -1,0 +1,27 @@
+<% if @user.role == 'user_admin' %>
+  <h1 style="text-align:center"> Hey! Admin </h1>
+<% else %>
+  <h1 style="text-align:center"> Hey! User </h1>
+<% end %>
+<br/>
+
+<table width="100%">
+<tr>
+<td>
+<div class="list-group" style="width:500px" >
+    <% if session[:role] == 'user_admin' and session[:user_id] == @user.id%>
+      <%= link_to 'Users', users_path, class: "list-group-item list-group-item-action" %>
+    <% end %>
+    <% if session[:user_id] == @user.id %>
+      <%= link_to 'Genres', genres_path, class: "list-group-item list-group-item-action" %>
+    <% end %>
+</div>
+</td>
+<td>
+  <div class="list-group" style="width:500px" >
+      <h3> My email: <%= @user.email %> </h3>
+      <h3> Username: <%= @user.username %> </h3>
+  </div>
+</td>
+</tr>
+</table>

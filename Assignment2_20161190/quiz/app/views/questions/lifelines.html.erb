@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+<% if $Iterator == $Length %>
+  <h2 style="text-align:center"> Quiz is done! </h2>
+  <%= link_to 'Quiz Page', subgenre_path(@subgenre.id), class: "btn btn-danger", role: "button"%>
+<% else %>
+<p>
+
+  <% if @question.qtype == 1 %>
+    <h3> Single Correct Answer Type </h3>
+  <% else %>
+    <h3> Multi Correct Answer Type </h3>
+  <% end %>
+</p>
+
+<div class="panel panel-warning">
+     <div class="panel-heading">
+        <strong><h4>Question : </h4></strong>
+        <h4><%= @question.qstring %></h4>
+     </div>
+</div>
+<div class="panel panel-info">
+     <div class="panel-heading">
+        <strong><h5>Points For the Question:</h5></strong>
+        <h4><%= @question.score %></h4>
+     </div>
+</div>
+
+<p>
+  <% if @question.picture && @question.picture != "" %>
+    <%= image_tag(@question.picture) %>
+  <% end %>
+</p>
+<p>
+  <% if @question.video && @question.video != "" %>
+    <%= video_tag @question.video, :size => "320x240", :controls => true %>
+  <% end %>
+</p>
+
+<%= render 'quizform', question: @question, options: @options, path: quiz_link_path ,notAnswer: @notAnswer, audiencePoll: @audiencePoll %>
+
+<%= link_to 'Pause', subgenre_path(@subgenre.id), class: "btn btn-success", role: "button" %>
+<% end %>

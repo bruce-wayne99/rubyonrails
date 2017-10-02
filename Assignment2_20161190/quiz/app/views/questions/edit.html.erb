@@ -1,0 +1,14 @@
+<h1>Editing Question</h1>
+
+<%= render 'form', question: @question, path: question_path %>
+
+<ul class="pager">
+  <li>
+    <% if session[:role] == 'user_admin' %>
+    <%= link_to 'Show', @question %>
+    <% end %>
+  </li>
+  <li>
+    <%= link_to 'Back', questions_link_path(@question.subgenre_id) %>
+  </li>
+</ul>

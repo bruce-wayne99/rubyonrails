@@ -1,0 +1,12 @@
+<h1>Editing Leaderboard</h1>
+
+<%= render 'form', leaderboard: @leaderboard ,path: leaderboard_path %>
+
+<ul class="pager">
+  <li>
+    <%= link_to 'Show', @leaderboard %>
+  </li>
+  <li>
+    <%= link_to 'Back', leaderboards_subgenre_link_path(@leaderboard.subgenre_id) %>
+  </li>
+</ul>

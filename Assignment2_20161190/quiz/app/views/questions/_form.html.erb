@@ -1,0 +1,42 @@
+<%= form_for question, class: "form-group", url: path do |form| %>
+  <% if question.errors.any? %>
+    <div  class="alert alert-danger">
+      <h2><%= pluralize(question.errors.count, "error") %> prohibited this question from being saved:</h2>
+
+      <ul>
+      <% question.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :qtype %>
+    <%= form.number_field :qtype, id: :question_qtype, class: "form-control", placeholder: "Enter Multiple or Single Choice" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :qstring %>
+    <%= form.text_area :qstring, id: :question_qstring, class: "form-control", placeholder: "Enter Question"%>
+  </div>
+
+  <div class="field">
+    <%= form.label :picture %>
+    <%= form.text_field :picture, id: :question_picture, class: "form-control", placeholder: "Enter Picture Name"%>
+  </div>
+
+  <div class="field">
+    <%= form.label :video %>
+    <%= form.text_field :video, id: :question_video, class: "form-control", placeholder: "Enter Video Name" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :score %>
+    <%= form.number_field :score, id: :question_score, class: "form-control", placeholder: "Enter Score" %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,28 @@
+<%= form_for leaderboard, class: "form-group", url: path do |form| %>
+  <% if leaderboard.errors.any? %>
+    <div  class="alert alert-danger">
+      <h2><%= pluralize(leaderboard.errors.count, "error") %> prohibited this leaderboard from being saved:</h2>
+
+      <ul>
+      <% leaderboard.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :score %>
+    <%= form.number_field :score, id: :leaderboard_score, class: "form-control", placeholder: "Enter Score" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :user_id %>
+    <%= form.number_field :user_id, id: :user_id, class: "form-control", placeholder: "Enter User Id " %>
+  </div>
+
+  <br/>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

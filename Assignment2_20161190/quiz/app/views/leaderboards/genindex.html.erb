@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Leaderboards</h1>
+
+<table class="table table-hover" style="width:50%">
+  <thead>
+    <tr>
+      <th>Score</th>
+      <th>Name</th>
+      <th>Genre</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% genreboard = Array.new %>
+    <% for id in @userids %>
+      <% score = 0 %>
+      <% @userdata = @genre.leaderboards.where(user_id: id) %>
+      <% for data in @userdata %>
+          <% score += data.score %>
+      <% end %>
+      <% genreboard.push([id, score]) %>
+    <% end %>
+    <% genreboard = genreboard.sort_by(&:last) %>
+    <% genreboard = genreboard.reverse %>
+    <% for ele in genreboard %>
+      <tr>
+        <% @user = User.find(ele[0]) %>
+        <td><%= ele[1] %></td>
+        <td><%= @user.username %></td>
+        <td><%= @genre.name %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to('Back' , genre_path(params[:genre_id]), class: "btn btn-success", role: "button")  %>

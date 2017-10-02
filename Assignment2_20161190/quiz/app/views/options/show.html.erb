@@ -1,0 +1,32 @@
+<p id="notice"><%= notice %></p>
+
+<div class="panel panel-warning">
+     <div class="panel-heading">
+        <strong><h4>Option : </h4></strong>
+        <h4><%= @option.answer %><br/></h4>
+      </div>
+</div>
+
+<div class="panel panel-info">
+     <div class="panel-heading">
+        <strong>
+          <h5>
+              IsAnswer?
+          </h5>
+        </strong>
+        <% if @option.answer == 1 %>
+              True
+        <% else %>
+              False
+        <% end %>
+     </div>
+</div>
+
+<ul class="pager">
+  <li>
+    <%= link_to 'Edit', edit_option_path(@option) %>
+  </li>
+  <li>
+    <%= link_to 'Back', options_link_path(@option.question_id) %>
+  </li>
+</ul>

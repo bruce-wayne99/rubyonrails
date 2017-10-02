@@ -1,0 +1,12 @@
+<h1>Editing Option</h1>
+
+<%= render 'form', option: @option, path: option_path%>
+
+<ul class="pager">
+  <li>
+    <%= link_to 'Show', @option %>
+  </li>
+  <li>
+    <%= link_to 'Back', options_link_path(@option.question_id) %>
+  </li>
+</ul>

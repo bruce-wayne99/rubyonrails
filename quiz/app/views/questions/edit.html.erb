@@ -1,8 +1,0 @@
-<h1>Editing Question</h1>
-
-<%= render 'form', question: @question, path: question_path %>
-
-<% if session[:role] == 'user_admin' %>
-<%= link_to 'Show', @question %> |
-<% end %>
-<%= link_to 'Back', questions_link_path(@question.subgenre_id) %>
